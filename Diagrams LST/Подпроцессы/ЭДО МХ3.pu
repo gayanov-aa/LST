@@ -1,0 +1,16 @@
+@startuml
+
+'Последовательность обмена МХ3 через ЭДО
+
+      group #LightGoldenRodYellow МХ3 через ЭДО
+        ERP -> EDO: MX3
+        EDO -> 3PL: MX3
+        3PL -> EDO: Подписанный МХ3
+        EDO -> ERP : Подписанный МХ3
+       else Ошибка
+       EDO -> ERP: Не успешно
+       note OVER ESB #red: "Сообщение в СТП"
+       end
+
+
+@enduml

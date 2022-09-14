@@ -1,0 +1,30 @@
+@startuml
+
+group Выдача ЗнП
+
+OMS -> LST : Привязка к рейсу
+
+activate LST
+LST --> OMS : Рейс привязан 
+deactivate LST
+activate OMS
+
+
+
+
+
+
+      
+        'Связка рейса и ЗнП'
+
+        OMS -> ESB : Выдать ЗнП
+        deactivate OMS
+        activate ESB
+        
+        WMS <- ESB : Выдать ЗнП
+        MM <-- ESB : Марки по ЗнП
+        deactivate ESB
+end
+
+
+@enduml

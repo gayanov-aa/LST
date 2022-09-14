@@ -1,0 +1,41 @@
+
+
+folder "Рабочая область УТЛ"{
+            artifact regprice as "Реестр цен" 
+            ' Пока предполагаем цены перевозчиков и цены для перевыставления!
+            component tender as "ТЗ для тендера"
+            component flightOut as "Рейс на погрузку"
+            component flightIn as "Рейс на разгрузку"
+
+
+            component payment as "Заявка на расход ДС"
+
+            artifact pIn as "Претензия от перевозчика"
+            artifact pOut as "Претензия перевозчику"
+
+            component ved as "ВЭД"
+            component courier as "Курьерская доставка"
+
+            artifact paymentStat as "Реестр взаиморасчетов"
+
+            tender -->regprice
+            
+
+        }
+
+node TMS
+node erp
+actor  flightManager as "Менеджер УСЛ"
+TMS --> tender:[Маршруты]
+TMS --> flightIn: [Информация по рейсам]
+TMS --> flightOut: [Информация по рейсам]
+
+ved <--> erp:[лимиты, реализации]
+
+flightManager --> tender:[Маршруты]
+flightManager --> flightIn: [Информация по рейсам]
+flightManager --> flightOut: [Информация по рейсам]
+
+payment --> erp : [Заявка на расход ДС]
+flightIn --> payment
+flightOut --> payment

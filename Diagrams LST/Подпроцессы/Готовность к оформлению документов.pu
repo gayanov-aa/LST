@@ -1,0 +1,12 @@
+@startuml
+
+group Готовность к оформлению документов
+    ERP -> ESB : Готовность к \nоформлению документов
+    deactivate ERP
+    activate ESB
+    ESB -> OMS :  Готовность к \nоформлению документов
+    deactivate ESB
+end
+
+
+@enduml

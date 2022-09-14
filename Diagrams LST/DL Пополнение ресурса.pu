@@ -1,0 +1,79 @@
+@startuml
+
+autonumber
+
+title "DL Пополнение ресурса"
+'skinparam BoxPadding 10
+'skinparam ParticipantPadding 20
+'Схема описывает взаимодействие по процессу ответственного хранения АО ЛадаИмидж'
+
+participant "АО ЛадаИмидж" as 3PL
+participant "DL Портал" as DL
+actor СТП
+participant ЭДО as EDO
+participant ESB
+participant ERP
+participant MM as "Марочный модуль"
+
+box "Логистический блок"
+participant OMS
+participant LST
+end box
+participant WMS
+
+
+
+
+
+
+group Оформление заказа поставщику на портале 
+note over ERP #Red: Как будет реализовываться процесс смены полки при покупке товара у ЛИ?\n + Марикировка
+
+note over DL: Автоматически или в ручную\n оформить заказ поставщику на портале
+
+end
+
+
+3PL ->ESB: Задание на отгрузку
+        activate ESB 
+            
+            ESB -[#Blue]>ERP :Заказ поствщику
+            activate ERP #Blue
+            
+            ERP -[#Blue]> ERP : Заказ поставщику
+           deactivate ERP
+
+        !include Подпроцессы\Создание ЗнО.pu
+        
+        group Создание ЗнП  
+            activate ESB
+            ESB -[#Green]>ERP:Создание ЗнП
+            activate ERP #Green
+                ERP -[#Green]> ERP:Создание ЗнП
+                ESB <[#Green]-ERP:Создание ЗнП   
+            deactivate ERP #Green
+            ESB -> OMS:Создание ЗнП
+            deactivate ESB
+            'проверить активацию ESB должна начинаться на 1 и заказнчиваться 12
+            activate OMS
+                OMS ->OMS:ЗнП
+            deactivate OMS
+
+        end
+        activate OMS
+
+        !include Подпроцессы\Выдача ЗнО.pu
+
+
+
+
+
+
+
+
+    
+
+    !include Подпроцессы\ПТиУ через ЭДО от поставщика.pu
+
+
+@enduml

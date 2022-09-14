@@ -1,0 +1,25 @@
+
+
+
+=== Диаграмма вариантов использования
+
+
+[plantuml,width=500,png=pd.png]
+// --
+@startuml
+
+!include Diagrams LST\UC LST.pu
+
+@enduml
+
+
+--
+=== Диаграмма потоков
+[plantuml,width=500,png=pd.png]
+--
+@startuml
+
+!include Diagrams LST\Потоки данных LST.pu
+
+@enduml
+--

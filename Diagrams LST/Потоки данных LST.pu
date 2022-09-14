@@ -1,0 +1,24 @@
+@startuml
+
+
+rectangle ERP
+rectangle TMS
+rectangle ABOM
+rectangle WMS
+
+actor Пользователь as Operator
+actor Поклажедатель as 3PL
+
+(LST/OMS) as LST
+
+ERP -down-> LST : Номенклатура? \nКонтрагенты? \nЗнО
+TMS -up-> LST : Подтв. рейс \nМаршрут
+LST -up-> TMS : ЗнО
+ABOM -down-> LST : ЗнО/ЗнП
+WMS -up-> LST : ЗнО/ЗнП
+WMS <-up- LST : Подтв.ЗнО/\nПодтв.ЗнП
+
+Operator -left-> LST : Маршрут
+3PL -right-> LST : ЗнО/ЗнП
+
+@enduml

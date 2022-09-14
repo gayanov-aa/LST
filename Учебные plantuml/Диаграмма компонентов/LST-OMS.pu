@@ -1,0 +1,120 @@
+@startuml
+
+actor 3pl as "Поклажедатель"
+' queue esb as "Датареон"
+
+node wms as  "WMS" 
+node erp as "ERP" 
+node tms as "Magenta"
+
+
+rectangle log as "Логистический функционал" {
+    
+        frame site as "Портал претензионных обращений"
+
+        folder "Рабочая область ОКРП"{
+            artifact pcust  as "претензия от покупателя"
+            artifact psupp  as "претензия поставщику"
+            folder reports as "Блок отчетности" {
+                component report1 as "Сверка баз 1С WMS"
+            }
+            artifact deviation as "Реестр отклонений"
+            artifact refuse as "Реестр возвратов"
+
+
+            site --> pcust :[Претензия \nна рассмотрение]
+        }
+
+        folder "Рабочая область УТЛ"{
+            artifact regprice as "Протокол согласования цен"
+            component tender as "Создание ТЗ для тендера"
+            artifact flightPay as "Реестр рейсов к оплате"
+            component payment as "Заявка на расход ДС"
+
+            artifact pIn as "Претензия от перевозчика"
+            artifact pOut as "Претензия перевозчику"
+
+            component ved as "Формирование документов ВЭД"
+
+            artifact paymentStat as "Реестр взаиморасчетов"
+
+            tender -->regprice
+            flightPay -->payment
+            payment --> erp : [Заявка на расход ДС]
+
+        }
+
+  
+
+    package OMS as "OMS" {
+        artifact ZnO as "ЗнО"
+        artifact ZnP as "ЗнП"
+        artifact PrZ as "ПрЗ"
+        artifact corrZnO as "Корректировка ЗнО"
+
+        component StatusDoc as "Назначенеие статусов и атрибутов"
+
+        ZnO --> corrZnO
+
+    }
+
+
+    package interfaceOper as "Рабочая область оператора" {
+        frame regZNO as "трекинг ЗнО/ЗнП/Рейс"
+        component regFlight as "Реестр рейсов"
+        component QueueFlight as "Наполнение рейсов"
+        component runZno as "Выдача заданий"
+
+        regFlight -left-> QueueFlight
+        QueueFlight --> regZNO
+        QueueFlight -->runZno :[привязка к рейсу]
+        
+    }
+
+    package nsi as "НСИ" {
+        artifact contractor as "Справочник контрагентов"
+        artifact logCard as "Справочник маршрутов"
+    }
+
+    package plan as "Область планирования"{
+        artifact logSt as "Логистический стандарт"
+        component calOut as "Расписание на разгрузку"
+        component planIN as "План вход"
+        component planOut as "План выход"
+        component sla as "Настройка SLA"
+
+        sla --> planIN : [правила ограничений]
+        sla --> planOut: [правила ограничений]
+
+        logSt -->planIN
+        logSt -->planOut
+
+        calOut <-- planIN
+    }
+}
+
+
+
+' wms <-down-> esb
+' erp <-down-> esb
+' esb <-down-> log
+'tms <-down-> esb
+3pl <-down-> OMS : [Задания]
+
+regZNO --> pIn :[отклонения транспорт]
+regFlight --> tender : [Список рейсов]
+contractor -[#red]-> paymentStat :[Условия/ отсрочки]
+regFlight --> paymentStat :[Исполненные рейсы]
+regFlight --> flightPay
+
+runZno --> wms :[Задание на склад]
+tms --> regFlight :[Назначенные рейсы]
+tms --> logCard :[Маршруты]
+
+logCard --> logSt :[Маршруты]
+
+erp --> ved : [Информация по реализации]
+erp --> OMS : [Задания складу]
+erp --> contractor
+
+@enduml

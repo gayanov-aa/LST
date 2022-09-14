@@ -1,0 +1,131 @@
+@startuml
+
+autonumber
+
+title "Перемещение между складами АО ТК Альфа"
+'skinparam BoxPadding 10
+'skinparam ParticipantPadding 20
+'Схема описывает взаимодействие по процессу ответственного хранения АО ЛадаИмидж'
+
+
+actor СТП
+participant ESB
+participant ERP
+participant MM as "Марочный модуль"
+
+box "Логистический блок"
+participant OMS
+participant LST
+end box
+participant WMS
+participant WMS2
+
+participant TMS
+
+activate ERP #Green
+ERP -[#Green]>ERP: Внутренний заказ
+
+
+activate ERP #Blue
+ERP -[#Blue]>ERP: Заказ на перемещение
+
+
+ERP->ERP: Резервирование
+
+ERP-[#Green]>ERP: ЗнО
+
+ERP->ESB:ЗнО/Отгрузить!
+
+deactivate ERP
+deactivate ERP
+activate ESB
+    ESB->OMS : ЗнО/Отгрузить!
+deactivate ESB
+
+activate OMS
+    OMS->OMS:ЗнО
+deactivate OMS
+
+!include  Подпроцессы\Выдача ЗнО.pu
+!include  Подпроцессы\ФТ8 Приоритезация.pu
+
+group Отбор товара
+activate WMS
+
+
+WMS -> ESB: Товар отобран!
+activate ESB
+ESB -> OMS: Товар отобран!
+deactivate ESB
+
+note right: Новый функционал, \nпередача \nдополнительного статуса
+
+end
+
+OMS -[#Red]-> LST: Команда складу отгрузить !
+
+
+!include  Подпроцессы\ФТ9 Приоритезация.pu
+
+!include  Подпроцессы\Товар в ТС.pu
+
+
+OMS -> ESB: Товар в ТС
+
+activate ESB
+ESB -> ERP: Товар в ТС
+deactivate ESB
+
+activate ERP
+ERP -> ERP : Перемещение
+
+ERP<->MM:Запрос марок
+note over MM #Red:"Е.Ткаченко Консультация \nпо перемещению с марками"
+
+
+ERP->ESB ++:Готовность \nк печати документов
+ESB->OMS --:Готовность \nк печати документов
+
+!include  Подпроцессы\Отгрузка ТС.pu
+
+
+
+    ERP -[#Green]> ERP ++ #Green: ЗнП
+
+    ERP -> ESB --: ЗнП
+   
+deactivate ERP
+
+
+
+activate ESB
+    ESB -> OMS: ЗнП
+deactivate ESB
+
+activate OMS
+    OMS -> OMS: ЗнП
+deactivate OMS
+
+note left of LST: "Доописать механизм привязки к рейсу"
+
+
+
+
+OMS->ESB ++:Выдать ЗнП
+ESB->WMS2 --:Выдать ЗнП
+
+
+
+WMS2->ESB ++:Подтверждение ЗнП
+ESB->OMS --: Подтверждение ЗнП
+OMS->ESB ++:Подтверждение ЗнП
+ESB->ERP--:Подтверждение ЗнП
+activate ERP
+ERP->ERP--:Перемещение
+
+
+
+
+
+
+@enduml

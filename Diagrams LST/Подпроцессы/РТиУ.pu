@@ -1,0 +1,20 @@
+@startuml
+
+group РТиУ
+
+                OMS -> ESB : Товар в ТС
+                activate ESB
+                ESB -> ERP : Товар в ТС
+                deactivate ESB
+                deactivate WMS
+                ERP -> ERP : РТиУ
+                note OVER ERP:"Взаимодействие с ММ для получения отобранных марок"
+               
+        else ЭДО
+
+               !include Реализация через ЭДО.pu 
+                
+        else Готовность к печати
+        |||
+    end
+@enduml

@@ -1,0 +1,46 @@
+@startuml
+
+node TMS
+
+artifact ZnP as "ЗнП"
+artifact ZnO as "ЗнО"
+artifact logCard as "Справочник маршрутов"
+
+ package interfaceOper as "Рабочая область оператора" {
+        ' frame regZNO as "Трекинг ЗнО/ЗнП/Рейс"
+        component checkIN as "Фиксация контрольных событий"
+        
+        component flightOut as "Рейс на погрузку"
+        ' component QueueFlight as "Наполнение рейсов ЗнО"
+        ' component runZno as "Выдача заданий в \nскладские системы"
+
+        component komAkt as "Коммерческий акт"
+        ' component fixErr as "Система фиксации отклонений "
+        ' component tsd as "Система выпуска комлпектов ТСД"
+        ' component depositDocs as "Система выпуска \nдокументов для поклажедателей"
+
+        component flightIn as "Рейс на разгрузку"
+        component printDoc as "Подсистема печати"
+
+        component reports1 as "Подсистема отчетности"
+
+
+        ' regFlight -left-> QueueFlight
+        ' QueueFlight --> regZNO
+        ' QueueFlight -->runZno :[привязка к рейсу]
+
+        flightIn --> komAkt
+        flightIn --> printDoc
+        flightOut --> printDoc
+
+        
+    }
+
+ZnP -->flightIn
+ZnO -->flightOut
+
+TMS --> logCard : [маршруты]
+logCard -->flightOut
+TMS --> flightOut:[Информация по рейсу]
+
+@enduml

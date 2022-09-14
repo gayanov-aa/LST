@@ -1,0 +1,41 @@
+@startuml
+
+component [УПП] as 1C
+component [WMS INFOR] as WMS
+cloud ABOM_B2B{
+    interface "API BI" as api
+    interface "API Отклонения \nпо ЗнО" as api2
+}
+
+component Datareon as esb
+
+api -(0- esb :Зак.пок.\Зак.пост.\n Отгр.\Приёмка \n Отказ
+WMS -(0- esb :ЗнО\ЗнП
+1C -(0- esb : ЗнО\ЗнП\nПТиУ\РТиУ\nЗак.пок.\Зак.пост.\n...
+
+database DWH {
+component [Сырые данные] as data1
+component [Таблица фактов] as data2
+data1 -- data2 : внутренние \nпроцедуры
+
+esb -- data1
+}
+
+database ПХД {
+    component [Функционал ручного\n разбора отклонений] as data3
+    component [Функционал настройки\n правил выявления отклонений] as func1
+    data3 -u- func1: Внутренняя \nпроцедура
+}
+
+data2 -l(0- data3:Передача причин \nразобранных в ручную
+data2 -l(0- data3:Передача фактов \nотклонений
+
+func1 -u0)- api2
+
+node PowerBI{
+    component [Отчет по SR] as sr
+}
+
+data2 -- sr :SSIS
+
+@enduml

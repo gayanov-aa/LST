@@ -1,0 +1,29 @@
+@startuml
+
+group Выдача ЗнО
+note OVER LST :"Авто./в ручную"
+OMS -> LST : Привязка к рейсу **(ФТ7)/(ФТ12)**
+
+activate LST
+LST --> OMS : Рейс привязан 
+deactivate LST
+activate OMS
+
+
+
+
+
+
+      
+        'Связка рейса и ЗнО'
+
+        OMS -> ESB : Выдать ЗнО
+        deactivate OMS
+        activate ESB
+        
+        WMS <- ESB : Выдать ЗнО
+        deactivate ESB
+end
+
+
+@enduml

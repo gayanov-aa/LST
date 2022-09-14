@@ -1,0 +1,60 @@
+@startuml
+'Обсуждение 20/05/2022
+autonumber
+
+title "ABOM Транзитный заказ (начало)"
+'skinparam BoxPadding 10
+'skinparam ParticipantPadding 20
+'Схема описывает взаимодействие по процессу ответственного хранения АО ЛадаИмидж'
+
+participant "ABOM" as B2B
+actor СТП
+participant ЭДО as EDO
+participant ESB
+participant ERP
+
+box "Логистический блок"
+participant OMS
+participant LST
+end box
+participant WMS
+
+B2B -> ESB : Заказ покупателя \n(транзитный с заездом)
+activate ESB
+ESB -> ERP : Заказ покупателя \n(транзитный с заездом)
+deactivate ESB
+
+activate ERP
+ERP -> ERP: Заказ покупателя
+ERP -> ERP: Заказ поставщику
+deactivate ERP
+
+... через некоторое время ...
+|||
+B2B -> ESB: Отгрузка поставщика
+activate ESB
+ESB -[#Green]> ERP :  Отгрузка поставщика
+activate ERP #Green
+ESB -> OMS : Отгрузка поставщика
+activate OMS
+deactivate ESB
+
+
+
+ERP -[#Green]> ERP : ЗнО
+ERP -[#Green]> ERP : ЗнП
+
+ERP -[#Green]> ESB: ЗнО
+
+
+deactivate ERP
+activate ESB #Green
+ESB -[#Green]> OMS: ЗнО
+deactivate ESB
+
+
+OMS -> OMS: ЗнО
+OMS -> OMS: ЗнП
+deactivate OMS
+
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+'title "РТиУ ТК Альфа через ЭДО"
+
+group #LightGoldenRodYellow РТиУ через ЭДО Альфа
+            ERP -> EDO: Подписанный РТиУ
+            EDO -> : Подписанный РТиУ
+
+        end
+
+@enduml

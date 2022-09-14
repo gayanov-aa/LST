@@ -1,0 +1,27 @@
+@startuml
+
+group #LightGoldenRodYellow ФТ8 ЗнО не отобран до времени отгрузки
+OMS -> LST : Привязка к \nочередному рейсу (ФТ8)
+'ФТ8 нужно реализовывать? Или УСЛ от него отказывается ???
+
+
+
+activate LST
+LST --> OMS : Рейс привязан 
+deactivate LST
+
+note OVER LST #red:"ФТ8 \nУточнение от РВГ!!!"
+OMS -> ESB : Передать новый рейс
+activate ESB
+ESB -> WMS : Передать новый рейс
+deactivate ESB
+
+else [Случай для ЕКТ]
+note over LST: "как будет реализовываться передача информации по рейсу ?"
+
+else [Случай для НСБ]
+note over LST: "как будет реализовываться передача информации по рейсу ?"
+
+end
+
+@enduml

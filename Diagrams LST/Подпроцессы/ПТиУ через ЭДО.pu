@@ -1,0 +1,10 @@
+@startuml
+
+group ПТиУ через ЭДО Альфа
+EDO -> ERP : ПТиУ
+
+
+
+end
+
+@enduml

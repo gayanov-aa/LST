@@ -1,0 +1,140 @@
+@startuml
+'Обсуждение 20/05/2022
+autonumber
+
+title "ABOM Продажа из собственного ресурса с перемещением (начало)"
+'skinparam BoxPadding 10
+'skinparam ParticipantPadding 20
+'Схема описывает взаимодействие по процессу ответственного хранения АО ЛадаИмидж'
+
+participant "ABOM" as B2B
+actor СТП
+participant ЭДО as EDO
+participant ESB
+participant ERP
+
+box "Логистический блок"
+participant OMS
+participant LST
+end box
+participant WMS
+
+B2B -> ESB : Заказ покупателя (простой)
+activate ESB
+ESB -> ERP : Заказ покупателя (простой)
+deactivate ESB
+
+activate ERP
+ERP -> ERP: Заказ покупателя
+activate ERP #Blue
+ERP -[#Blue]> ERP  : Заказ на перемещение
+deactivate ERP
+ERP -> ERP: Резервирование
+
+
+ERP -->ESB : Отказ по тому чего нет
+activate ESB
+ESB --> B2B : Отказ по тому чего нет
+deactivate ESB
+
+ERP -[#Green]> ERP : ЗнО
+activate ERP #LightGreen
+ERP -> ESB: "Отгрузить!"/ЗнО
+
+deactivate ERP
+deactivate ERP
+activate ESB
+ESB -> OMS: "Отгрузить!"/ЗнО
+deactivate ESB
+activate OMS
+
+OMS -> OMS: ЗнО
+deactivate OMS
+
+!include Подпроцессы\Выдача ЗнО.pu
+!include Подпроцессы\ФТ8 Приоритезация.pu
+
+group Отбор товара
+activate WMS
+
+
+WMS -> ESB: Товар упакован!
+activate ESB
+ESB -> OMS: Товар упакован!
+deactivate ESB
+
+note right: Новый функционал, \nпередача \nдополнительного статуса
+
+end
+
+OMS -[#Red]-> LST: Команда складу отгрузить !
+
+
+!include Подпроцессы\ФТ9 Приоритезация.pu
+
+!include Подпроцессы\Товар в ТС.pu
+
+
+OMS -> ESB: Товар в ТС
+
+activate ESB
+ESB -> ERP: Товар в ТС
+deactivate ESB
+
+activate ERP
+ERP -> ERP : Перемещение
+activate ERP #Green
+ERP -[#Green]> ERP : ЗнП
+ERP -[#Green]> ERP : ЗнО
+
+
+ERP -> ESB: ЗнП
+activate ESB
+ESB -> OMS: ЗнП
+deactivate ESB
+
+activate OMS
+OMS -> OMS: ЗнП
+deactivate OMS
+
+
+ERP -> ESB: ЗнО
+
+
+deactivate ERP
+deactivate ERP
+
+activate ESB
+ESB -> OMS: ЗнО
+deactivate ESB
+
+activate OMS
+OMS -> OMS: ЗнО
+deactivate OMS
+
+
+
+
+
+
+ERP -> ESB: Перемещение
+deactivate ERP
+deactivate ERP
+
+activate ESB
+ESB -> B2B : Отгрузка перемещения
+deactivate ESB
+
+
+
+'!include РТиУ.pu
+'ERP -> ESB: РТиУ
+'activate ESB
+'ESB -> B2B : Отгрузка на портале
+'deactivate ESB
+
+!include Подпроцессы\Готовность к оформлению документов.pu
+
+!include Подпроцессы\Отгрузка ТС.pu
+
+@enduml

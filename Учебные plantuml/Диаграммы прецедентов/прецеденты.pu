@@ -1,0 +1,184 @@
+@startuml
+
+'диаграмма прецедентов'
+
+:Пользователь: --> (Use)
+
+"Главный админ" as Admin
+"Использование приложения" as (Use)
+Admin --> (Управление приложением)
+
+
+
+@enduml
+
+@startuml
+skinparam actorStyle awesome
+:Пользователь: --> (Use)
+"Главный админ" as Admin
+"Использование приложения" as (Use)
+Admin --> (Управление приложением)
+@enduml
+
+
+@startuml
+actor Гость as g
+package Специалисты {
+  actor "Шеф повар" as c
+  actor "Ресторанный критик" as fc
+}
+package Ресторан {
+  usecase "Есть" as UC1
+  usecase "Платить" as UC2
+  usecase "Пить" as UC3
+  usecase "Составлять отзыв" as UC4
+}
+fc --> UC1
+fc --> UC2
+fc --> UC3
+fc --> UC4
+g --> UC1
+g --> UC2
+g --> UC3
+@enduml
+
+
+@startuml
+
+usecase UC1 as "Вы можете использовать
+несколько строчек для описания вашего прецедента.
+Также, Вы можете использовать разделители:
+--
+Можно использовть несколько разных разделителей одновременно.
+==
+И еще Вы можете добавлять в разделители заголовки:
+..ЗАКЛЮЧЕНИЕ..
+Это позволяет делать очень большие и
+развернутые описания."
+
+@enduml
+
+
+@startuml
+left to right direction
+actor "Ресторанный критик" as fc
+rectangle Ресторан {
+  usecase "Есть" as UC1
+  usecase "Платить" as UC2
+  usecase "Пить" as UC3
+  usecase "Составлять отзыв" as UC4
+}
+fc --> UC1
+fc --> UC2
+fc --> UC3
+fc --> UC4
+@enduml
+
+
+@startuml
+
+Пользователь -> (Старт)
+Пользователь --> (Использование приложения) : Небольшая заметка
+
+:Главный админ: ---> (Использование приложения) : Еще одна\nнебольшая\nзаметка
+
+@enduml
+
+
+@startuml
+:Галавный админ: as Admin
+(Работа с приложением) as (Use)
+
+Пользователь <|-- Admin
+(Работа) <|-- (Use)
+
+@enduml
+
+
+@startuml
+:Главный админ: as Admin
+(Работа с приложением) as (Use)
+
+Пользователь -> (Работа)
+Пользователь --> (Use)
+
+Admin ---> (Use)
+
+note right of Admin : Это пример заметки.
+
+note right of (Use)
+  Заметки могут занимать
+  несколько строчек
+end note
+
+note "Эта заметка будет указывать\nсразу на несколько элементов." as N2
+(Работа) .. N2
+N2 .. (Use)
+@enduml
+
+
+
+@startuml
+Пользователь << Человек >>
+:Основная база данных: as MySql << Приложение >>
+(Start) << One Shot >>
+(Работа с приложением) as (Use) << Основное действие >>
+
+Пользователь -> (Start)
+Пользователь --> (Use)
+
+MySql --> (Use)
+
+@enduml
+
+
+@startuml
+(Прецедент 1) <.. :Пользователь:
+(Прецедент 2) <. :Пользователь:
+@enduml
+
+
+@startuml
+:Пользователь: -left-> (Лево)
+:Пользователь: -right-> (Право)
+:Пользователь: -up-> (Верх)
+:Пользователь: -down-> (Низ)
+@enduml
+
+
+@startuml
+:Актор1: --> (Прецедент1)
+newpage
+:Актор2: --> (Прецедент2)
+@enduml
+
+
+Полноценный пример
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+actor Заказчик
+actor Менеджер
+rectangle Заказ {
+  Заказчик -- (заказ)
+  (заказ) .> (оплата) : включает
+  (консультация) .> (заказ) : дополняет
+  (заказ) -- Менеджер
+}
+@enduml
+
+@startuml
+actor foo
+foo --> (bar) : обычная
+foo --> (bar1) #line:red;line.bold;text:red  : красная, жирный
+foo --> (bar2) #green;line.dashed;text:green : зеленая, штриховой
+foo --> (bar3) #blue;line.dotted;text:blue   : синяя, пунктирный
+@enduml
+
+
+@startuml
+actor a
+actor b #pink;line:red;line.bold;text:red
+usecase c #palegreen;line:green;line.dashed;text:green
+usecase d #aliceblue;line:blue;line.dotted;text:blue
+@enduml

@@ -1,0 +1,837 @@
+@startuml
+Alice -> Bob: Authentication Request
+Bob --> Alice: Authentication Response
+
+Alice -> Bob: Another authentication Request
+Alice <-- Bob: another authentication Response
+@enduml
+
+@startuml
+participant Participant as Foo
+actor       Actor       as Foo1
+boundary    Boundary    as Foo2
+control     Control     as Foo3
+entity      Entity      as Foo4
+database    Database    as Foo5
+collections Collections as Foo6
+queue       Queue       as Foo7
+Foo -> Foo1 : To actor 
+Foo -> Foo2 : To boundary
+Foo -> Foo3 : To control
+Foo -> Foo4 : To entity
+Foo -> Foo5 : To database
+Foo -> Foo6 : To collections
+Foo -> Foo7 : To queue
+@enduml
+
+@startuml
+participant Participant as Foo
+actor       Actor       as Foo1
+boundary    Boundary    as Foo2
+control     Control     as Foo3
+entity      Entity      as Foo4
+database    Database    as Foo5
+collections Collections as Foo6
+queue       Queue       as Foo7
+Foo -> Foo1 : To actor 
+Foo -> Foo2 : To boundary
+Foo -> Foo3 : To control
+Foo -> Foo4 : To entity
+Foo -> Foo5 : To database
+Foo -> Foo6 : To collections
+Foo -> Foo7 : To queue
+@enduml
+
+
+@startuml
+participant Last order 30
+participant Middle order 20
+participant First order 10
+@enduml
+
+
+@startuml
+participant Participant [
+    =Title
+    ----
+    ""SubTitle""
+]
+
+participant Bob
+
+Participant -> Bob
+@enduml
+
+
+@startuml
+Alice -> "Bob()" : Hello
+"Bob()" -> "Это что-то\nочень длинное" as Long
+' Эта строчка будет обозначать тоже самое:
+' "Bob()" -> Long as "Это что-то\nочень длинное"
+Long --> "Bob()" : ok
+@enduml
+
+
+@startuml
+Alice -> Alice: Это сигнал к самому себе.\nТакже это является демонстрацией\nмногострочного \nтекста.
+@enduml
+
+
+@startuml
+Alice <- Alice: Это сигнал к самому себе.\nТакже это является демонстрацией\nмногострочного \nтекста.
+@enduml
+
+
+@startuml
+skinparam sequenceMessageAlign right
+Bob -> Alice : Request
+Alice -> Bob : Response
+@enduml
+
+
+@startuml
+skinparam responseMessageBelowArrow true
+Bob -> Alice : дай пять рублей
+Alice -> Bob : нет, не дам
+@enduml
+
+
+@startuml
+Bob ->x Alice
+Bob -> Alice
+Bob ->> Alice
+Bob -\ Alice
+Bob \\- Alice
+Bob //-- Alice
+
+Bob ->o Alice
+Bob o\\-- Alice
+
+Bob <-> Alice
+Bob <->o Alice
+@enduml
+
+
+@startuml
+Bob -[#red]> Alice : hello
+Alice -[#0000FF]->Bob : ok
+@enduml
+
+
+@startuml
+autonumber
+Bob -> Alice : Authentication Request
+Bob <- Alice : Authentication Response
+@enduml
+
+@startuml
+autonumber
+Bob -> Alice : Authentication Request
+Bob <- Alice : Authentication Response
+
+autonumber 15
+Bob -> Alice : Another authentication Request
+Bob <- Alice : Another authentication Response
+
+autonumber 40 10
+Bob -> Alice : Yet another authentication Request
+Bob <- Alice : Yet another authentication Response
+
+@enduml
+
+
+@startuml
+autonumber "<b>[000]"
+Bob -> Alice : Authentication Request
+Bob <- Alice : Authentication Response
+
+autonumber 15 "<b>(<u>##</u>)"
+Bob -> Alice : Another authentication Request
+Bob <- Alice : Another authentication Response
+
+autonumber 40 10 "<font color=red><b>Message 0  "
+Bob -> Alice : Yet another authentication Request
+Bob <- Alice : Yet another authentication Response
+
+@enduml
+
+
+@startuml
+autonumber 10 10 "<b>[000]"
+Bob -> Alice : Authentication Request
+Bob <- Alice : Authentication Response
+
+autonumber stop
+Bob -> Alice : dummy
+
+autonumber resume "<font color=red><b>Message 0  "
+Bob -> Alice : Yet another authentication Request
+Bob <- Alice : Yet another authentication Response
+
+autonumber stop
+Bob -> Alice : dummy
+
+autonumber resume 1 "<font color=blue><b>Message 0  "
+Bob -> Alice : Yet another authentication Request
+Bob <- Alice : Yet another authentication Response
+@enduml
+
+
+@startuml
+autonumber 1.1.1
+Alice -> Bob: Authentication request
+Bob --> Alice: Response
+
+autonumber inc A
+'Now we have 2.1.1
+Alice -> Bob: Another authentication request
+Bob --> Alice: Response
+
+autonumber inc B
+'Now we have 2.2.1
+Alice -> Bob: Another authentication request
+Bob --> Alice: Response
+
+autonumber inc A
+'Now we have 3.1.1
+Alice -> Bob: Another authentication request
+autonumber inc B
+'Now we have 3.2.1
+Bob --> Alice: Response
+@enduml
+
+
+@startuml
+autonumber 10
+Alice -> Bob
+note right
+  <U+0025>autonumber<U+0025> работает везде.
+  Текущее значение этой переменной равно ** %autonumber% **
+end note
+Bob --> Alice: //This is the response %autonumber%//
+@enduml
+
+
+@startuml
+
+header Page Header
+footer Page %page% of %lastpage%
+
+title Example Title
+
+Alice -> Bob : message 1
+Alice -> Bob : message 2
+
+@enduml
+
+
+@startuml
+
+Alice -> Bob : message 1
+Alice -> Bob : message 2
+
+newpage
+
+Alice -> Bob : message 3
+Alice -> Bob : message 4
+
+newpage A title for the\nlast page
+
+Alice -> Bob : message 5
+Alice -> Bob : message 6
+@enduml
+
+
+@startuml
+Alice -> Bob: Authentication Request
+
+alt successful case
+
+    Bob -> Alice: Authentication Accepted
+
+else some kind of failure
+
+    Bob -> Alice: Authentication Failure
+    group My own label
+    Alice -> Log : Log attack start
+        loop 1000 times
+            Alice -> Bob: DNS Attack
+        end
+    Alice -> Log : Log attack end
+    end
+
+else Another type of failure
+
+   Bob -> Alice: Please repeat
+
+end
+@enduml
+
+
+@startuml
+Alice -> Bob: Authentication Request
+Bob -> Alice: Authentication Failure
+group Моя основная метка [Моя дополнительна метка]
+    Alice -> Log : Log attack start
+    loop 1000 times
+        Alice -> Bob: DNS Attack
+    end
+    Alice -> Log : Log attack end
+end
+@enduml
+
+
+@startuml
+Alice->Bob : привет
+note left: это первая заметка
+
+Bob->Alice : ага
+note right: это другая заметка
+
+Bob->Bob : я размышляю над этим
+note left
+заметки
+могут занимать
+несколько строчек
+end note
+@enduml
+
+
+@startuml
+participant Alice
+participant Bob
+note left of Alice #aqua
+Будет отображено
+слева от Алисы
+end note
+
+note right of Alice: Будет отображено справа от Алисы
+
+note over Alice: Будет отображено над Алисой.
+
+note over Alice, Bob #FFAAAA: Будет отображено\n над Алисой и Бобом.
+
+note over Bob, Alice
+А это еще
+один пример
+длинной заметки.
+end note
+@enduml
+
+
+
+@startuml
+caller -> server : conReq
+hnote over caller : idle
+caller <- server : conConf
+rnote over server
+ "r" as rectangle
+ "h" as hexagon
+endrnote
+rnote over server
+ что-то важное
+ на нескольких
+ строчках
+endrnote
+hnote over caller
+ что-то не важное
+ на нескольких
+ строчках
+endhnote
+@enduml
+
+
+@startuml
+Alice->Bob:m1
+Bob->Charlie:m2
+note over Alice, Charlie: Старый способ отображения поверх всех участников. Задается как:\n ""note over //FirstPart, LastPart//"".
+note across: Новый метод. Задается как:\n""note across""
+Bob->Alice
+hnote across:Еще одна заметка поверх всех участников.
+@enduml
+
+
+@startuml
+note over Alice : initial state of Alice
+note over Bob : initial state of Bob
+Bob -> Alice : hello
+@enduml
+
+@startuml
+note over Alice : initial state of Alice
+/ note over Bob : initial state of Bob
+Bob -> Alice : hello
+@enduml
+
+
+@startuml
+participant Alice
+participant "The **Famous** Bob" as Bob
+
+Alice -> Bob : hello --there--
+... Some ~~long delay~~ ...
+Bob -> Alice : ok
+note left
+  This is **bold**
+  This is //italics//
+  This is ""monospaced""
+  This is --stroked--
+  This is __underlined__
+  This is ~~waved~~
+end note
+
+Alice -> Bob : A //well formatted// message
+note right of Alice
+ This is <back:cadetblue><size:18>displayed</size></back>
+ __left of__ Alice.
+end note
+note left of Bob
+ <u:red>This</u> is <color #118888>displayed</color>
+ **<color purple>left of</color> <s:red>Alice</strike> Bob**.
+end note
+note over Alice, Bob
+ <w:#FF33FF>This is hosted</w> by <img sourceforge.jpg>
+end note
+@enduml
+
+
+@startuml
+
+== Initialization ==
+
+Alice -> Bob: Authentication Request
+Bob --> Alice: Authentication Response
+
+== Repetition ==
+
+Alice -> Bob: Another authentication Request
+Alice <-- Bob: another authentication Response
+
+@enduml
+
+
+@startuml
+participant Alice
+actor Bob
+
+ref over Alice, Bob : инициализация
+
+Alice -> Bob : hello
+
+ref over Bob
+  Тут мы можем занять
+  несколько строчек
+end ref
+@enduml
+
+
+@startuml
+
+Alice -> Bob: Запрос авторизации
+...
+Bob --> Alice: Авторизация
+...5 минут спустя...
+Bob --> Alice: Пока !
+
+@enduml
+
+
+@startuml
+
+    skinparam maxMessageSize 100
+
+    participant a
+    participant b
+
+    a -> b :этот\nтекст\nперенесен\nвручную
+    a -> b :этот текст очень длинный и перенесен автоматически
+
+@enduml
+
+
+
+@startuml
+
+Alice -> Bob: message 1
+Bob --> Alice: ok
+|||
+Alice -> Bob: message 2
+Bob --> Alice: ok
+||45||
+Alice -> Bob: message 3
+Bob --> Alice: ok
+
+@enduml
+
+
+
+@startuml
+participant User
+
+User -> A: DoWork
+activate A
+
+A -> B: << createRequest >>
+activate B
+
+B -> C: DoWork
+activate C
+C --> B: WorkDone
+destroy C
+
+B --> A: RequestCreated
+deactivate B
+
+A -> User: Done
+deactivate A
+
+@enduml
+
+
+@startuml
+participant User
+
+User -> A: DoWork
+activate A #FFBBBB
+
+A -> A: Internal call
+activate A #DarkSalmon
+
+A -> B: << createRequest >>
+activate B
+
+B --> A: RequestCreated
+deactivate B
+deactivate A
+A -> User: Done
+deactivate A
+
+@enduml
+
+
+
+@startuml
+autoactivate on
+alice -> bob : старт
+bob -> bob : собственный старт
+bill -> bob #005500 : старт другого потока
+bob -> george ** : создание
+return финиш другого потока
+return собственный финиш
+bob -> george !! : удаление
+return финиш
+
+@enduml
+
+
+
+@startuml
+Bob -> Alice : привет
+activate Alice
+Alice -> Alice : какое-то действие
+return пока
+@enduml
+
+
+@startuml
+Bob -> Alice : hello
+
+create Other
+Alice -> Other : new
+
+create control String
+Alice -> String
+note right : You can also put notes!
+
+Alice --> Bob : ok
+
+@enduml
+
+
+@startuml
+alice -> bob ++ : hello
+bob -> bob ++ : self call
+bob -> bib ++  #005500 : hello
+bob -> george ** : create
+return done
+return rc
+bob -> george !! : delete
+return success
+@enduml
+
+
+@startuml
+alice   ->  bob     ++   : hello1
+bob     ->  charlie --++ : hello2
+charlie --> alice   --   : ok
+@enduml
+
+
+@startuml
+@startuml
+alice -> bob   --++ #gold: hello
+bob   -> alice --++ #gold: you too
+alice -> bob   --: step1
+alice -> bob   : step2
+@enduml
+@enduml
+
+
+@startuml
+[-> A: DoWork
+
+activate A
+
+A -> A: Internal call
+activate A
+
+A ->] : << createRequest >>
+
+A<--] : RequestCreated
+deactivate A
+[<- A: Done
+deactivate A
+@enduml
+
+
+@startuml
+!pragma teoz true
+
+{start} Alice -> Bob : старт некоторых работ, занимающих какое-то время
+Bob -> Max : что-то одно
+Max -> Bob : что-то другое
+{end} Bob -> Alice : конец
+
+{start} <-> {end} : прошедшее время
+
+@enduml
+
+
+@startuml
+
+participant "Famous Bob" as Bob << Generated >>
+participant Alice << (C,#ADD1B2) Testable >>
+
+Bob->Alice: First message
+
+@enduml
+
+
+@startuml
+
+skinparam guillemet false
+participant "Famous Bob" as Bob << Generated >>
+participant Alice << (C,#ADD1B2) Testable >>
+
+Bob->Alice: First message
+
+@enduml
+
+
+@startuml
+
+participant Bob << (C,#ADD1B2) >>
+participant Alice << (C,#ADD1B2) >>
+
+Bob->Alice: First message
+
+@enduml
+
+
+@startuml
+
+title __Simple__ **communication** example
+
+Alice -> Bob: Authentication Request
+Bob -> Alice: Authentication Response
+
+@enduml
+
+
+@startuml
+
+title
+ <u>Simple</u> communication example
+ on <i>several</i> lines and using <font color=red>html</font>
+ This is hosted by <img:sourceforge.jpg>
+end title
+
+Alice -> Bob: Authentication Request
+Bob -> Alice: Authentication Response
+
+@enduml
+
+
+@startuml
+
+box "Internal Service" #LightBlue
+participant Bob
+participant Alice
+end box
+participant Other
+
+Bob -> Alice : hello
+Alice -> Other : hello
+
+@enduml
+
+
+@startuml
+
+hide footbox
+title Footer removed
+
+Alice -> Bob: Authentication Request
+Bob --> Alice: Authentication Response
+
+@enduml
+
+
+@startuml
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 60
+skinparam sequenceParticipant underline
+
+actor User
+participant "First Class" as A
+participant "Second Class" as B
+participant "Last Class" as C
+
+User -> A: DoWork
+activate A
+
+A -> B: Create Request
+activate B
+
+B -> C: DoWork
+activate C
+C --> B: WorkDone
+destroy C
+
+B --> A: Request Created
+deactivate B
+
+A --> User: Done
+deactivate A
+
+@enduml
+
+
+@startuml
+skinparam backgroundColor #EEEBDC
+skinparam handwritten true
+
+skinparam sequence {
+ArrowColor DeepSkyBlue
+ActorBorderColor DeepSkyBlue
+LifeLineBorderColor blue
+LifeLineBackgroundColor #A9DCDF
+
+ParticipantBorderColor DeepSkyBlue
+ParticipantBackgroundColor DodgerBlue
+ParticipantFontName Impact
+ParticipantFontSize 17
+ParticipantFontColor #A9DCDF
+
+ActorBackgroundColor aqua
+ActorFontColor DeepSkyBlue
+ActorFontSize 17
+ActorFontName Aapex
+}
+
+actor User
+participant "First Class" as A
+participant "Second Class" as B
+participant "Last Class" as C
+
+User -> A: DoWork
+activate A
+
+A -> B: Create Request
+activate B
+
+B -> C: DoWork
+activate C
+C --> B: WorkDone
+destroy C
+
+B --> A: Request Created
+deactivate B
+
+A --> User: Done
+deactivate A
+
+@enduml
+
+
+@startuml
+skinparam ParticipantPadding 20
+skinparam BoxPadding 10
+
+box "Foo1"
+participant Alice1
+participant Alice2
+end box
+box "Foo2"
+participant Bob1
+participant Bob2
+end box
+Alice1 -> Bob1 : hello
+Alice1 -> Out : out
+@enduml
+
+
+@startuml
+Bob -> Alice : hello
+Alice -> Bob : ok
+@enduml
+
+
+@startuml
+skinparam lifelineStrategy nosolid
+Bob -> Alice : hello
+Alice -> Bob : ok
+@enduml
+
+
+@startuml
+skinparam lifelineStrategy solid
+Bob -> Alice : hello
+Alice -> Bob : ok
+@enduml
+
+
+@startuml
+participant Alice
+participant Bob
+participant Carol
+
+Alice -> Bob : Привет
+@enduml
+
+
+@startuml
+hide unlinked
+participant Alice
+participant Bob
+participant Carol
+
+Alice -> Bob : Привет
+@enduml
+
+
+@startuml
+Alice -> Bob: Запрос авторизации
+alt#Gold #LightBlue Успешный кейс
+    Bob -> Alice: Запрос удовлетворен
+else #Pink Ошибка
+    Bob -> Alice: Запрос отклонен
+end
+@enduml
+
+
+@startuml
+mainframe Это **основной фрейм**
+Alice->Bob : Привет
+@enduml

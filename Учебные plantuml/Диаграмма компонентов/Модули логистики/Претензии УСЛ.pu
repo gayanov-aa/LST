@@ -1,0 +1,95 @@
+@startuml
+' Внешие связи описываются без указания типа, будем сводить либо в общей либо в областях
+
+
+artifact ZnP as "ЗнП"
+artifact ZnO as "ЗнО"
+artifact PrZ as "ПрЗ"
+
+component contract as "НСИ \n Договора"
+        ' Срок рассмотрения претензии
+
+component AccCode as "НСИ \n Коды приёмки"
+component JobCode as "НСИ \n Коды \nпроизводственных \nработ"
+
+rectangle log as "Логистический функционал" {
+    
+        rectangle pretensionOUT as "Источник претензии OUT/IN"{
+            node site as "ИС Портал претензионных \n обращений " 
+            frame ABOM
+            frame OZON 
+            Actor OKRP as "Специалист \n ОКРП"
+
+        }
+        
+        rectangle pretensionIN as "Источник претензии IN"{
+            
+            
+            Actor OKRP as "Специалист \n ОКРП"
+        }
+
+        
+
+        component act as "Акт о \n расхождении"
+        
+
+        folder "Рабочая область ОКРП"{
+            artifact pcust  as "претензия от покупателя"
+            artifact psupp  as "претензия поставщику"
+            folder reports as "Блок отчетности" {
+                component report1 as "Сверка баз 1С WMS"
+            }
+            artifact deviation as "Акт об отклонении"
+            artifact refuse as "Учет возвратов"
+
+            component resource as "График доступности \n специалистов"
+            ' component owner as "Владелец товара"
+
+            
+        }
+
+
+
+
+
+
+pretensionOUT <--> pcust :[Претензия Out]
+contract --> pcust :[Срок рассмотрения \nпретензии]
+ZnP <--> pcust :[Возврат брака]
+act <-- pcust
+
+
+
+
+pcust --> psupp : [Создание \nна основании \n "Нет вины склада"]
+ZnP <--> psupp :[Закрыто с \nрасхождениями]
+OKRP --> psupp :[Ручной ввод]
+contract --> psupp :[Срок выставления \nпретензии]
+
+resource --> psupp :[Доступность специалиста]
+resource --> pcust :[Доступность специалиста]
+
+deviation <--> pcust
+deviation <--> psupp
+
+refuse <-- ZnO : [Статус выполнения]
+refuse <-- ZnP : [Статус выполнения]
+
+refuse <-- pcust: [Данные]
+refuse <-- psupp: [Данные]
+
+' owner --> pcust
+' owner --> psupp
+
+ZnP <-- AccCode
+PrZ <-- JobCode
+
+ZnP --> deviation
+ZnO --> deviation
+PrZ --> deviation
+
+}
+
+
+
+@enduml

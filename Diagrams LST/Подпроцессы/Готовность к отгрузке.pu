@@ -1,0 +1,14 @@
+@startuml
+
+group Готовность к отгрузке
+        ERP -> ESB : Готов к отгрузке!
+        activate ESB
+        ESB -> OMS : Готов к отгрузке!
+        deactivate ESB
+
+        'Переход права собственности в WMS /// Смена владельца
+
+        OMS -[#Red]-> LST : Команда складу \nотгрузить!
+end
+
+@enduml

@@ -1,0 +1,112 @@
+@startuml
+'Обсуждение 18/05/2022
+autonumber
+
+title "ABOM Пополнение ресурса"
+'skinparam BoxPadding 10
+'skinparam ParticipantPadding 20
+'Схема описывает взаимодействие по процессу ответственного хранения АО ЛадаИмидж'
+
+participant "ABOM" as B2B
+actor СТП
+participant ЭДО as EDO
+participant ESB
+participant ERP
+participant MM as "Марочный модуль"
+
+box "Логистический блок"
+participant OMS
+participant LST
+end box
+participant WMS
+
+group Оформление заказа поставщику на портале 
+
+note over B2B: Автоматически или в ручную\n оформить заказ поставщику на портале
+
+end
+
+
+B2B -> ESB : Заказ поставщику
+activate ESB
+ESB -> ERP : Заказ поставщику
+deactivate ESB
+
+activate ERP
+ERP -> ERP: Заказ поставщику
+deactivate ERP
+
+!include Подпроцессы\ПТиУ через ЭДО от поставщика.pu
+
+note over ERP #Red: "Надо расписать откуда появляется рейс поставки"
+|||
+B2B -> ESB: Отгрузка поставщика
+activate ESB
+ESB -[#Green]> ERP :  Отгрузка поставщика
+activate ERP #Green
+
+ESB -> OMS : Отгрузка поставщика
+deactivate ESB
+activate OMS
+
+
+
+ERP -[#Green]> ERP : ЗнП
+
+
+
+ERP -[#Green]> ESB : ЗнП
+deactivate ERP
+activate ESB #Green
+ESB -[#Green]> OMS: ЗнП
+deactivate ESB
+
+OMS -> OMS: ЗнП
+
+OMS <--> EDO : Запрос марок 
+
+OMS --> OMS: ЗнП \n(Запись марок)
+
+deactivate OMS
+
+!include Подпроцессы\Выдача ЗнП.pu
+
+WMS -> ESB: Подтверждение ЗнП
+activate ESB
+ESB --> MM: Факт марки по ЗнП
+activate MM
+MM --> ESB: Факт марки по ЗнП
+deactivate MM
+
+ESB -> OMS: Подтверждение ЗнП
+deactivate ESB
+activate OMS
+OMS -> OMS: ЗнП \n(Приняты строки!)
+
+OMS -> ESB: ЗнП \n(Приняты строки!)
+deactivate OMS
+activate ESB
+ESB -> ERP: ЗнП\n(Приняты строки!)
+deactivate ESB
+
+activate ERP
+activate ERP #Green
+ERP -[#Green]> ERP:Подтверждение ЗнО
+
+deactivate ERP
+
+ERP -> ERP: ПТиУ
+
+ERP -> EDO: Подписанный РТиУ\n поставщика
+
+
+ERP -> ESB: Подтверждение \n поступления
+deactivate ERP
+activate ESB
+
+ESB -> B2B: Подтверждение приёмки
+deactivate ESB
+
+
+
+@enduml

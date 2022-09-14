@@ -1,0 +1,40 @@
+  @startuml
+        
+        autonumber
+        'skinparam BoxPadding 10
+        'skinparam ParticipantPadding 20
+        'Схема описывает взаимодействие по перепокупке товаров у АО Лада-Имидж для собственной сети'
+        title "Прямая отгрузка дилерам Лада"
+
+        participant "АО ЛадаИмидж" as 3PL
+        participant ЭДО as EDO
+        participant ESB
+        participant ERP
+
+        box "Логистический блок"
+        participant OMS
+        participant LST
+        end box
+        
+        
+        activate ESB 
+        group #LightGreen LoadReal 
+        
+        3PL ->ESB: Реализация РТиУ
+        ESB ->ERP :Реализация РТиУ
+        end
+        deactivate ESB
+        note OVER LST #red  : "Прямая отгрузка DL \nдолжна попадать в LST?"
+            
+        !include Подпроцессы\Поступление через ЭДО.pu
+        
+        activate ERP
+        
+        ERP -> ERP : ПТиУ
+        ERP -> ERP : РТиУ дилеру
+        deactivate ERP
+           
+        !include Подпроцессы\Реализация через ЭДО.pu
+
+        note over  ERP #red : "Нужно ли ЛИ через WS \nполучать печ. формы \nУПД и ТТН от Альфа?"
+        @enduml

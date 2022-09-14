@@ -1,0 +1,459 @@
+@startuml 
+
+!include <awslib/AWSCommon>
+!include <awslib/Compute/all.puml>
+
+listsprites
+
+@enduml
+
+@startgantt
+
+language ru
+
+[Разработка прототипа] lasts 15 days
+[Тест прототипа] lasts 10 days
+
+Project starts 2020-07-01
+[Разработка прототипа] starts 2020-07-01
+[Тест прототипа] starts 2020-07-16
+@endgantt
+
+@startgantt
+
+language ru
+
+[Разработка прототипа] lasts 15 days
+[Тест прототипа] lasts 10 days
+
+Project starts 2020-07-01
+[Разработка прототипа] starts 2020-07-01
+[Тест прототипа] starts 2020-07-16
+@endgantt
+
+
+@startgantt
+
+language ru
+
+[Разработка прототипа] lasts 15 days
+[Тест прототипа] lasts 10 days
+
+Project starts 2020-07-01
+[Разработка прототипа] ends 2020-07-15
+[Тест прототипа] ends 2020-07-25
+
+@endgantt
+
+
+@startgantt
+
+language ru
+
+Project starts 2020-07-01
+[Разработка прототипа] starts 2020-07-01
+[Тест прототипа] starts 2020-07-16
+[Разработка прототипа] ends 2020-07-15
+[Тест прототипа] ends 2020-07-25
+
+@endgantt
+
+
+@startgantt
+language ru
+Project starts 2020-07-01
+[Разработка прототипа] starts 2020-07-01 and ends 2020-07-15
+[Тест прототипа] starts 2020-07-16 and lasts 10 days
+@endgantt
+
+
+@startgantt
+[Разработка прототипа] lasts 10 days
+[Кодирование прототипа] lasts 15 days
+[Написание тестов] lasts 10 days
+[Кодирование прототипа] starts at [Разработка прототипа]'s end
+[Написание тестов] starts at [Кодирование прототипа]'s start
+@endgantt
+
+
+@startgantt
+[Разработка прототипа] as [РП] lasts 15 days
+[Тест прототипа] as [Т] lasts 10 days
+[Т] starts at [РП]'s end
+@endgantt
+
+@startgantt
+[Разработка прототипа] lasts 10 days
+[Тест прототипа] lasts 7 days
+[Тест прототипа] starts at [Разработка прототипа]'s end
+[Разработка прототипа] is colored in Fuchsia/FireBrick
+[Тест прототипа] is colored in GreenYellow/Green
+@endgantt
+
+@startgantt
+[foo] lasts 21 days
+[foo] is 40% completed
+[bar] lasts 30 days and is 10% complete
+@endgantt
+
+@startgantt
+[Тест прототипа] lasts 10 days
+[Прототип готов] happens at [Тест прототипа]'s end
+[Настройка сборочной линии] lasts 12 days
+[Настройка сборочной линии] starts at [Тест прототипа]'s end
+@endgantt
+
+@startgantt
+[Задача1] lasts 4 days
+then [Задача1.1] lasts 5 days
+[Задача1.2] starts at [Задача1]'s end and lasts 7 days
+
+[Задача2] lasts 5 days
+then [Задача2.1] lasts 5 days
+
+[Всё выполнено] happens at [Задача1.1]'s end
+[Всё выполнено] happens at [Задача1.2]'s end
+[Всё выполнено] happens at [Задача2.1]'s end
+
+@endgantt
+
+@startgantt
+[Задача1] lasts 10 days
+[Задача1] links to [[http://plantuml.com]]
+@endgantt
+
+
+@startgantt
+language ru
+Project starts the 20th of september 2017
+[Разработка прототипа] as [TASK1] lasts 13 days
+[TASK1] is colored in Lavender/LightBlue
+@endgantt
+
+@startgantt
+Project starts the 2020/09/01 
+language ru
+
+2020/09/07 is colored in salmon
+2020/09/13 to 2020/09/16 are colored in lightblue
+
+[Разработка прототипа] as [TASK1] lasts 22 days
+[TASK1] is colored in Lavender/LightBlue
+[Прототип готов] happens at [TASK1]'s end
+@endgantt
+
+
+@startuml
+language ru
+
+' указываем, что суббота выходной
+saturday are closed
+' указываем, что воскресенье тоже выходной
+sunday are closed
+
+Project starts the 1st of january 2021
+[Разработка прототипа] as [TASK1] lasts 19 days
+[TASK1] is colored in Lavender/LightBlue
+[Тестирование] lasts 14 days
+[TASK1]->[Тестирование]
+
+2021-01-18 to 2021-01-22 are named [Приёмка]
+2021-01-18 to 2021-01-22 are colored in salmon 
+@enduml
+
+
+@startuml
+language ru
+
+printscale weekly
+' указываем, что суббота выходной
+saturday are closed
+' указываем, что воскресенье тоже выходной
+sunday are closed
+
+Project starts the 1st of september 2020
+[Разработка прототипа] as [TASK1] lasts 130 days
+[TASK1] is colored in Lavender/LightBlue
+[Тестирование] lasts 20 days
+[TASK1]->[Тестирование]
+
+2021-01-20 to 2021-01-30 are named [Приёмка]
+2021-01-20 to 2021-01-30 are colored in salmon 
+@enduml
+
+@startgantt
+language ru
+
+projectscale monthly
+Project starts the 20th of september 2020
+[Разработка прототипа] as [TASK1] lasts 130 days
+[TASK1] is colored in Lavender/LightBlue
+[Тестирование] lasts 20 days
+[TASK1]->[Тестирование]
+
+2021-01-18 to 2021-01-22 are named [Приёмка]
+2021-01-18 to 2021-01-22 are colored in salmon 
+@endgantt
+
+
+@startgantt
+projectscale quarterly
+Project starts the 1st of october 2020
+[Разработка прототипа] as [TASK1] lasts 700 days
+[TASK1] is colored in Lavender/LightBlue
+[Тестирование] lasts 300 days
+[TASK1]->[Тестирование]
+
+2022-01-18 to 2022-03-22 are colored in salmon 
+@endgantt
+
+
+@startgantt
+language ru
+
+projectscale yearly
+Project starts the 1st of october 2020
+[Разработка прототипа] as [TASK1] lasts 700 days
+[TASK1] is colored in Lavender/LightBlue
+[Тестирование] lasts 300 days
+[TASK1]->[Тестирование]
+
+2022-01-18 to 2022-03-22 are colored in salmon 
+@endgantt
+
+
+@startuml
+language ru
+printscale daily
+saturday are closed
+sunday are closed
+
+Project starts the 1st of january 2021
+[Разработка прототипа] as [TASK1] lasts 8 days
+[TASK1] is colored in Lavender/LightBlue
+[Тесты] lasts 3 days
+[TASK1]->[Тесты]
+
+2021-01-08 to 2021-01-12 are named [Приёмка]
+2021-01-08 to 2021-01-12 are colored in salmon 
+@enduml
+
+
+@startuml
+language ru
+printscale daily zoom 2
+saturday are closed
+sunday are closed
+
+Project starts the 1st of january 2021
+[Разработка прототипа] as [TASK1] lasts 8 days
+[TASK1] is colored in Lavender/LightBlue
+[Тесты] lasts 3 days
+[TASK1]->[Тесты]
+
+2021-01-08 to 2021-01-12 are named [Приёмка]
+2021-01-08 to 2021-01-12 are colored in salmon 
+@enduml
+
+@startuml
+language ru
+printscale weekly zoom 4
+saturday are closed
+sunday are closed
+
+Project starts the 1st of january 2021
+[Разработка прототипа] as [TASK1] lasts 19 days
+[TASK1] is colored in Lavender/LightBlue
+[Тесты] lasts 14 days
+[TASK1]->[Тесты]
+
+2021-01-18 to 2021-01-22 are named [Приёмка]
+2021-01-18 to 2021-01-22 are colored in salmon 
+@enduml
+
+@startgantt
+language ru
+project starts the 2018.04.09
+
+'указываем что суббота - выходной
+saturday are closed
+'указываем, что воскресенье - выходной
+sunday are closed
+'указываем, что дата 2018.05.01 выходной день
+2018.05.01 is closed
+'указываем, что все дни с 2018.04.17 по 2018.04.19 являются выходными днями
+2018.04.17 to 2018.04.19 is closed
+
+[Разработка прототипа] lasts 14 days
+[Тестирование] lasts 5 days
+[Тестирование] starts at [Разработка прототипа]'s end
+[Разработка прототипа] is colored in Fuchsia/FireBrick
+[Тестирование] is colored in GreenYellow/Green
+@endgantt
+
+@startgantt
+language ru
+
+'указываем, что все дни с 2020.07.07 по 2020.07.17 являются выходными днями
+2020-07-07 to 2020-07-17 is closed
+'указываем, что один из этих дней является рабочим
+2020-07-13 is open
+
+Project starts the 2020-07-01
+[Разработка прототипа] lasts 10 days
+Then [Тестирование] lasts 10 days
+@endgantt
+
+
+@startgantt
+language ru
+Project starts 2021-03-29
+saturday are closed
+sunday are closed
+[Ревью1] happens at 2021-03-29
+[Ревью2 - 3 недели] happens on 3 weeks after [Ревью1]'s end
+[Ревью2 - 21 день] happens on 21 days after [Ревью1]'s end
+@endgantt
+
+
+@startgantt
+[Разработка прототипа] lasts 14 days
+then [Тестирование прототипа] lasts 4 days
+then [Развертывание прототипа] lasts 6 days
+@endgantt
+
+
+@startgantt
+[Разработка прототипа] lasts 14 days
+[Сборка прототипа] lasts 4 days
+[Подготовка к тестированию] lasts 6 days
+[Разработка прототипа] -> [Сборка прототипа]
+[Разработка прототипа] -> [Подготовка к тестированию]
+@endgantt
+
+@startgantt
+[Задача 1] on {Алиса} lasts 10 days
+[Задача 2] on {Боб:50%} lasts 2 days
+then [Задача 3] on {Алиса:25%} lasts 1 days
+@endgantt
+
+@startgantt
+[Task1] on {Alice} lasts 10 days
+[Task2] on {Bob:50%} lasts 2 days
+then [Task3] on {Alice:25%} lasts 1 days
+then [Task4] on {Alice:25%} {Bob} lasts 1 days
+@endgantt
+
+
+@startgantt
+hide ressources footbox
+[Task1] on {Alice} lasts 10 days
+[Task2] on {Bob:50%} lasts 2 days
+then [Task3] on {Alice:25%} lasts 1 days
+then [Task4] on {Alice:25%} {Bob} lasts 1 days
+@endgantt
+
+
+@startgantt
+[Задача 1] lasts 10 days
+then [Задача 2] lasts 4 days
+-- Фаза два --
+then [Задача 3] lasts 5 days
+then [Задаа 4] lasts 6 days
+@endgantt
+
+
+@startgantt
+printscale daily zoom 2
+[Разработка прототипа] lasts 13 days and is colored in Lavender/LightBlue
+[Тест прототипа] lasts 9 days and is colored in Coral/Green and starts 3 days after [Разработка прототипа]'s end
+[Составление тестов] lasts 5 days and ends at [Разработка прототипа]'s end
+[Найм тестировщиков] lasts 6 days and ends at [Составление тестов]'s start
+[Подготовка отчета о тестировании] is colored in Coral/Green
+[Подготовка отчета о тестировании] starts 1 day before [Тест прототипа]'s start and ends at [Тест прототипа]'s end
+@endgantt
+
+
+@startgantt
+language ru
+<style>
+ganttDiagram {
+	task {
+		FontName Helvetica
+		FontColor red
+		FontSize 18
+		FontStyle bold
+		BackGroundColor GreenYellow
+		LineColor blue
+	}
+	milestone {
+		FontColor blue
+		FontSize 25
+		FontStyle italic
+		BackGroundColor yellow
+		LineColor red
+	}
+	note {
+		FontColor DarkGreen
+		FontSize 10
+		LineColor OrangeRed
+	}
+	arrow {
+		FontName Helvetica
+		FontColor red
+		FontSize 18
+		FontStyle bold
+		BackGroundColor GreenYellow
+		LineColor blue
+		LineStyle 8.0;13.0
+		LineThickness 3.0
+	}
+	separator {
+		BackgroundColor lightGreen
+		LineStyle 8.0;3.0
+		LineColor red
+		LineThickness 1.0
+		FontSize 16
+		FontStyle bold
+		FontColor purple
+		Margin 5
+		Padding 20
+	}
+	timeline {
+	    BackgroundColor Bisque
+	}
+	closed {
+		BackgroundColor pink
+		FontColor red
+	}
+}
+</style>
+Project starts the 2020-12-01
+
+[Задача1] lasts 10 days
+sunday are closed
+
+note bottom
+  заметка1 ...
+  заметка2 ...
+  пояснение1 ...
+  пояснение2 ...
+end note
+
+[Задача2] lasts 20 days
+[Задача2] starts 10 days after [Задача1]'s end
+-- Заголовок - разделитель --
+[M1] happens on 5 days after [Задача1]'s end
+
+<style>
+	separator {
+	    LineColor black
+		Margin 0
+		Padding 0
+	}
+</style>
+
+-- конец --
+@endgantt
+
+

@@ -1,0 +1,22 @@
+@startuml
+title Диаграмма компонентов
+
+database MySQL{
+cloud Облако {
+    node "Другие группы"{ 
+        package Группа {
+            component [Заказ] as comp1
+
+            component [Контроллер] as comp2
+            () "iDialog" as int1
+            () "iApplication" as int2
+            interface HTTP
+
+            comp2 -right- HTTP :use
+            comp2 -right- int1
+            comp2 -0)- int3
+        }
+    }
+}
+}
+@enduml

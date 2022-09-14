@@ -1,0 +1,86 @@
+        @startuml
+        'Обсуждение 20/05/2022
+        autonumber
+        'skinparam BoxPadding 10
+        'skinparam ParticipantPadding 20
+        'Схема описывает взаимодействие по перепокупке товаров у АО Лада-Имидж для собственной сети'
+        title "Перепродажа из ресурса АО Лада-Имидж"
+
+        participant "АО ЛадаИмидж" as 3PL
+        participant ЭДО as EDO
+        participant ESB
+        participant ERP
+
+        box "Логистический блок"
+        participant OMS
+        participant LST
+        end box
+        participant WMS
+
+        3PL ->ESB: ЗнО + Заказ покупателя
+        activate ESB 
+            
+            ESB -[#Blue]>ERP :Заказ покупателя
+            activate ERP #Blue
+            ERP -[#Blue]> ERP : Заказ покупателя
+            ERP -[#Blue]> ERP : Заказ поставщику
+           deactivate ERP
+
+        !include Подпроцессы\Создание ЗнО.pu
+          
+        note over LST :"Решение о обобщении!"
+        activate OMS
+
+        !include Подпроцессы\Выдача ЗнО.pu
+
+        !include Подпроцессы\ФТ8 Приоритезация.pu
+
+        !include Подпроцессы\Отбор товара.pu
+        activate ERP
+
+        'В будущем МХ3 будем передавать через ЭДО надо добавить на схему'
+        'Надо добавить расшифровку привязки к рейсу на схему'
+        !include Подпроцессы\LoadShipment.pu
+
+        !include Подпроцессы\ЭДО МХ3.pu
+        !include Подпроцессы\Поступление через ЭДО.pu
+
+
+        deactivate 3PL
+        ERP -> ERP : Поступление \nпо заказу
+        ERP -> ERP : Резервирование \nпо заказу
+        
+
+        group Смена собственника в WMS
+        
+        note over LST,WMS #Red: Надо описать целевой процесс перехода права собственности
+
+        end
+
+        !include Подпроцессы\Готовность к отгрузке.pu
+
+        !include Подпроцессы\ФТ9 Приоритезация.pu
+
+        !include Подпроцессы\Товар в ТС.pu
+
+
+        !include Подпроцессы\РТиУ.pu
+        !include Подпроцессы\Готовность к оформлению документов.pu
+      
+        deactivate OMS
+
+        !include Подпроцессы\Отгрузка ТС.pu
+
+        
+
+
+        
+        
+        
+        
+        
+        '== "Новый процесс" =='
+        'newpage'
+
+
+        @enduml

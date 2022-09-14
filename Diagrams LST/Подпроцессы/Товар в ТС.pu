@@ -1,0 +1,12 @@
+@startuml
+
+group Товар в ТС
+WMS -> : Товар в ТС
+WMS -> ESB : Товар в ТС
+deactivate WMS
+activate ESB
+ESB -> OMS : Товар в ТС
+deactivate ESB
+end
+
+@enduml

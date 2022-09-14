@@ -1,0 +1,21 @@
+@startuml
+autonumber
+'skinparam BoxPadding 10
+'skinparam ParticipantPadding 20
+'Схема описывает взаимодействие по перепокупке товаров у АО Лада-Имидж для собственной сети'
+participant ABOM as B2B
+participant "АО ЛадаИмидж" as LI
+participant ЭДО as EDO
+participant ESB
+participant ERP
+
+box "Логистический блок"
+participant OMS
+participant LST
+end box
+participant WMS
+
+
+
+
+@enduml

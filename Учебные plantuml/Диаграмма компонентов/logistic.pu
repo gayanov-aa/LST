@@ -1,0 +1,13 @@
+@startuml
+
+left to right direction
+
+!include diagrams/Учебные plantuml/Диаграмма компонентов/Модули логистики/Претензии УСЛ.pu
+!include diagrams/Учебные plantuml/Диаграмма компонентов/Модули логистики/УТЛ.pu
+!include diagrams/Учебные plantuml/Диаграмма компонентов/Модули логистики/LST.pu
+!include diagrams/Учебные plantuml/Диаграмма компонентов/Модули логистики/OMS.pu
+!include diagrams/Учебные plantuml/Диаграмма компонентов/Модули логистики/planing_area.pu
+!include diagrams/Учебные plantuml/Диаграмма компонентов/Модули логистики/references.pu
+
+
+@enduml

@@ -1,0 +1,54 @@
+@startuml
+
+node TMS
+artifact logCard as "Справочник маршрутов"
+node LM
+node SLA
+
+ package plan as "Область планирования"{
+        ' artifact logSt as "Логистический стандарт"
+        ' component calOut as "Расписание на разгрузку"
+        component planIN as "План вход"
+        component planOut as "План выход"
+        component planInternal as "План внутренних задач склада"
+        ' component sla as "Настройка SLA"
+        component reservFlightIn as "Система резервирования \nсвободных окон \nразгрузки"
+        component reservFlightOut as "Система резервирования \nсвободных окон \nпогрузки"
+        
+        node performancePlan as "План загрузки склада" {
+                component calPerfomanceIN as "График загрузки склада вход"
+                component calPerfomanceOUT as "График загрузки склада выход"
+                component calPerfomanceInternal as "График загрузки склада внутренний"
+                ' component GeneralPerfomancePlan as "Сводный план загрузки"
+
+
+        }
+
+        }
+
+
+component groupSupp as "Группы поставщиков"
+artifact contractor as "Справочник контрагентов"
+component AccCode as "НСИ \n Коды приёмки"
+
+contractor --> groupSupp
+
+LM -->planIN: [ТМ и Линий на ТС]
+groupSupp --> planIN
+AccCode --> planIN:[Нормативное время]
+performancePlan --> planIN
+performancePlan --> planOut
+performancePlan --> planInternal
+
+planIN -->reservFlightIn
+planOut -->reservFlightOut
+
+TMS --> logCard
+
+logCard -->planOut
+
+logCard --> calPerfomanceIN
+
+LM -right-> performancePlan:[Информация по ресурсам]
+
+@enduml
