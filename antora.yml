@@ -1,7 +1,7 @@
 name: component-LST
 title: Component LST
 version: 1
-#start_page: LST.adoc
+start_page: index.adoc
 asciidoc:
   attributes:
     source-language: asciidoc@
