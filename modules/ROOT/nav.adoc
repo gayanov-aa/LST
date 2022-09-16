@@ -1,4 +1,4 @@
 
 * xref:index.adoc[Индекс]
 * xref:text.adoc[Текст]
-* xref:integration_template.adoc[Шаблон интеграции]
+* xref:integration_template.adoc["Шаблон интеграции"]
