@@ -23,6 +23,11 @@ asciidoc:
     idprefix: ''
     idseparator: '-'
     page-pagination: ''
+    :plantuml-server-url: http://www.plantuml.com/plantuml
+  extensions:
+  - asciidoctor-plantuml
+
 ui:
   bundle:
     url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+
