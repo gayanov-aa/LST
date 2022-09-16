@@ -1,5 +1,6 @@
 = Документы
 
-* xref:integration_template.adoc[Шаблон интеграции]
 * xref:Шаблоны документов аналитики.adoc[Список документов по проекту]
+* xref:integration_template.adoc[Шаблон интеграции]
+
 
