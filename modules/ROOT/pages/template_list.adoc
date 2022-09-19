@@ -4,6 +4,12 @@
 :toc: top
 :lang: rus
 
+[plantuml]
+----
+include::schema.pu[]
+----
+
+
 [cols="1,2,5,5,2,5", greed=rows, options=header]
 |===
 
