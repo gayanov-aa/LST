@@ -1,7 +1,7 @@
 name: Аналитика требований
 title: Component LST
 version: 1.0
-start_page: Шаблоны документов аналитики.adoc
+start_page: template_list.adoc
 asciidoc:
   attributes:
     source-language: asciidoc@
