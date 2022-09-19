@@ -1,8 +1,8 @@
-= Структура технического проекта
-:doctype: 
-:numbered:
-:toc: top
-:lang: rus
+== Структура технического проекта
+// :doctype: 
+// :numbered:
+// :toc: top
+// :lang: rus
 
 
 
