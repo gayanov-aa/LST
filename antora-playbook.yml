@@ -1,7 +1,7 @@
 site:
   title: Antora Demo Site
   # the 404 page and sitemap files only get generated when the url property is set
-  url: https://antora.gitlab.io/demo/docs-site
+  url: https://10.2.1.90:10000
   start_page: lst::index.adoc
   #start_page: component-b::index.adoc
 content:
@@ -15,6 +15,7 @@ content:
 #    branches: [v1.0, v2.0, main]
 #    start_path: docs
   - url: https://github.com/gayanov-aa/LST.git
+  - url: https://gayanov-aa:Lazuri15@github.com/TKAlpha/ProjectDocs.git
 #  - url: https://gitlab.com/antora/demo/docs-site.git
     branches: HEAD
 asciidoc:
