@@ -23,8 +23,8 @@ asciidoc:
     idprefix: ''
     idseparator: '-'
     page-pagination: ''
-      plantuml-server-url: "https://plantuml.gitlab-static.net"
-      plantuml-fetch-diagram: true
+    plantuml-server-url: "https://plantuml.gitlab-static.net"
+    plantuml-fetch-diagram: true
   extensions:
   - asciidoctor-plantuml
 
